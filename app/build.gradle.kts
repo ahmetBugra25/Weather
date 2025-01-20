@@ -1,11 +1,14 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id ("kotlin-kapt")
+    id ("androidx.navigation.safeargs.kotlin")
+    id ("com.google.devtools.ksp")
 }
 
 android {
     namespace = "com.example.weather"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.weather"
@@ -33,6 +36,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -45,4 +51,26 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    val nav_version = "2.7.7"
+    // Kotlin
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
+    val room_version = "2.6.1"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor ("androidx.room:room-compiler:$room_version")
+    // To use Kotlin annotation processing tool (kapt)
+    ksp("androidx.room:room-compiler:$room_version")
+
+    implementation ("androidx.room:room-rxjava3:$room_version")
+    implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
+
+    implementation ("androidx.recyclerview:recyclerview:1.3.1")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("androidx.appcompat:appcompat:1.6.1")
+    implementation ("com.squareup.picasso:picasso:2.71828")
 }
